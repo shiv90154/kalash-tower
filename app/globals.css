@@ -1,26 +1,136 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --font-classic: "Playfair Display", "Georgia", serif;
+  --font-body: "Inter", "Outfit", sans-serif;
+  --color-classic-primary: #1a365d;
+  --color-classic-primary-light: #2a4a7f;
+  --color-classic-gold: #b8860b;
+  --color-classic-gold-light: #d4a017;
+  --color-classic-bg: #f8f6f2;
+  --color-classic-card: #ffffff;
+  --color-classic-text: #2d3748;
+  --color-classic-text-light: #4a5568;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Animation Keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes gentleZoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background: linear-gradient(135deg, rgba(26, 54, 93, 0.85), rgba(26, 54, 93, 0.75));
+  }
+  50% {
+    background: linear-gradient(135deg, rgba(26, 54, 93, 0.9), rgba(15, 39, 68, 0.8));
+  }
+  100% {
+    background: linear-gradient(135deg, rgba(26, 54, 93, 0.85), rgba(26, 54, 93, 0.75));
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Utility Classes */
+@utility animate-fade-in {
+  animation: fadeIn 1.2s ease-out both;
+}
+
+@utility animate-slide-up {
+  animation: slideUp 0.8s ease-out both;
+}
+
+@utility animate-slide-in-left {
+  animation: slideInLeft 0.8s ease-out both;
+}
+
+@utility animate-gentle-zoom {
+  animation: gentleZoom 20s ease-in-out infinite alternate;
+}
+
+@utility animate-gradient {
+  animation: gradientShift 10s ease-in-out infinite;
+}
+
+@utility animate-pulse-slow {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+/* Base Styles */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-classic-bg);
+  color: var(--color-classic-text);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b8860b;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8b6914;
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid var(--color-classic-gold);
+  outline-offset: 2px;
 }
