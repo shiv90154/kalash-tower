@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
-    "Get in touch with Natraj Properties for premium office rentals in Mohali and Chandigarh. Request a callback or visit our office.",
+    "Get in touch with Natraj Properties for premium office rentals in Mohali. Visit KAILASH TOWER, Phase 8B, Industrial Area, Sector 74, Mohali.",
   alternates: {
     canonical: "/contact",
   },
@@ -53,9 +53,13 @@ export default function ContactPage() {
                       Office Address
                     </h3>
                     <p className="text-gray-600">
-                      Sector 82, Mohali
+                      KAILASH TOWER, F 177, Phase 8B,
                       <br />
-                      Punjab - 140306
+                      Industrial Area, Sector 74,
+                      <br />
+                      Sahibzada Ajit Singh Nagar,
+                      <br />
+                      Punjab 140307
                     </p>
                   </div>
                 </div>
@@ -123,14 +127,14 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Map Section */}
+          {/* Map Section – coordinates for KAILASH TOWER, Sector 74 */}
           <div className="mt-16">
             <h2 className="font-classic text-3xl font-bold text-classic-primary text-center mb-8">
               Find Us Here
             </h2>
             <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3429.857!2d76.7179!3d30.7046!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDQyJzE2LjYiTiA3NsKwNDMnMDQuNCJF!5e0!3m2!1sen!2sin!4v1234567890"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3430.212998947086!2d76.7179!3d30.7046!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fed7f2b7e5b5b%3A0xb0c3a3e1f24c0de2!2sKAILASH%20TOWER%2C%20Phase%208B%2C%20Industrial%20Area%2C%20Sector%2074%2C%20Sahibzada%20Ajit%20Singh%20Nagar%2C%20Punjab%20140307!5e0!3m2!1sen!2sin!4v1685951288990"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { sendEmail } from "@/app/actions/sendEmail";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -11,32 +12,36 @@ export default function ContactForm() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    // Simulate form submission
-    setTimeout(() => {
-      setLoading(false);
-      setSubmitted(true);
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        requirement: "",
-        message: "",
-      });
-    }, 1500);
+    setError(null);
+
+    startTransition(async () => {
+      const result = await sendEmail(formData);
+      if (result.success) {
+        setSubmitted(true);
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          requirement: "",
+          message: "",
+        });
+      } else {
+        setError(result.error || "Something went wrong. Please try again.");
+      }
+    });
   };
 
   if (submitted) {
@@ -62,11 +67,13 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
+          {error}
+        </div>
+      )}
       <div>
-        <label
-          htmlFor="name"
-          className="block text-sm font-medium text-gray-700 mb-1"
-        >
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
           Full Name *
         </label>
         <input
@@ -82,10 +89,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-gray-700 mb-1"
-        >
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
           Email Address *
         </label>
         <input
@@ -101,10 +105,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label
-          htmlFor="phone"
-          className="block text-sm font-medium text-gray-700 mb-1"
-        >
+        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
           Phone Number *
         </label>
         <input
@@ -120,10 +121,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label
-          htmlFor="requirement"
-          className="block text-sm font-medium text-gray-700 mb-1"
-        >
+        <label htmlFor="requirement" className="block text-sm font-medium text-gray-700 mb-1">
           Requirement *
         </label>
         <select
@@ -143,10 +141,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label
-          htmlFor="message"
-          className="block text-sm font-medium text-gray-700 mb-1"
-        >
+        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
           Message (Optional)
         </label>
         <textarea
@@ -162,31 +157,16 @@ export default function ContactForm() {
 
       <button
         type="submit"
-        disabled={loading}
+        disabled={isPending}
         className="w-full rounded-md bg-classic-primary text-white py-3.5 font-semibold tracking-wide hover:bg-classic-primary-light transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
       >
-        {loading ? (
+        {isPending ? (
           <>
-            <svg
-              className="animate-spin h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              />
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-              />
+            <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
             </svg>
-            Submitting...
+            Sending...
           </>
         ) : (
           "Request a Call Back"

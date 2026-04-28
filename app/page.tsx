@@ -81,7 +81,7 @@ export default function Home() {
         {/* Background Image with Gentle Zoom */}
         <div className="absolute inset-0 z-0 animate-gentle-zoom">
           <Image
-            src="/images/hero-office.jpg"
+            src="/hero-office.jpg"
             alt="Premium office building by Natraj Properties"
             fill
             priority

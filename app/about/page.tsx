@@ -84,7 +84,7 @@ export default function AboutPage() {
             </div>
             <div className="relative aspect-[4/3] rounded-lg overflow-hidden shadow-2xl animate-fade-in">
               <Image
-                src="/images/team.jpg"
+                src="/team.avif"
                 alt="Natraj Properties team"
                 fill
                 className="object-cover"
