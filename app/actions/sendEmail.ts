@@ -7,33 +7,30 @@ export async function sendEmail(formData: {
   requirement: string;
   message: string;
 }) {
-  const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY"; // yahan apni key daalein
+  // 🔁 Replace with your Formspree endpoint (https://formspree.io/f/xxxxxxx)
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/your-form-id";
 
-  const response = await fetch("https://api.web3forms.com/submit", {
+  const response = await fetch(FORMSPREE_ENDPOINT, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
     body: JSON.stringify({
-      access_key: WEB3FORMS_ACCESS_KEY,
-      subject: "New Enquiry from Natraj Properties Website",
-      from_name: formData.name,
-      replyto: formData.email,
-      message: `
-Name: ${formData.name}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Requirement: ${formData.requirement}
-Message: ${formData.message}
-      `.trim(),
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      requirement: formData.requirement,
+      message: formData.message,
+      _subject: `New Enquiry from ${formData.name} - Natraj Properties`,
     }),
   });
 
+  if (!response.ok) {
+    return { success: false, error: `Server error (${response.status}). Please check the endpoint or try again.` };
+  }
+
   const result = await response.json();
-  if (result.success) {
+  if (result.ok) {
     return { success: true };
   } else {
-    return { success: false, error: result.message };
+    return { success: false, error: result.error || "Submission failed." };
   }
 }

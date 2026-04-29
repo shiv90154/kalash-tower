@@ -4,130 +4,83 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
+const icons = {
+  home: <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1-1m-6 0h4"/></svg>,
+  listings: <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 4h5m-3 4h2"/></svg>,
+  about: <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>,
+  contact: <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>,
+  call: <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>,
+};
+
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/listings", label: "Listings" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/", label: "Home", iconKey: "home" },
+  { href: "/listings", label: "Listings", iconKey: "listings" },
+  { href: "/about", label: "About", iconKey: "about" },
+  { href: "/contact", label: "Contact", iconKey: "contact" },
 ];
 
 export default function Header() {
   const pathname = usePathname();
-  const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on route change
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
-
   return (
-    <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-        scrolled
-          ? "bg-white/98 shadow-md backdrop-blur-sm"
-          : "bg-white/95 shadow-sm backdrop-blur-sm"
-      } border-b border-gray-200`}
-    >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-1 group">
-          <span className="text-2xl md:text-3xl font-classic font-bold text-classic-primary tracking-wide transition-colors group-hover:text-classic-gold">
-            Natraj
-          </span>
-          <span className="text-lg md:text-xl font-light text-gray-500 tracking-wider">
-            Properties
-          </span>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex space-x-8 lg:space-x-10">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`relative py-2 text-sm font-medium tracking-wide transition-colors ${
-                pathname === link.href
-                  ? "text-classic-primary font-semibold after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-classic-gold after:rounded-full"
-                  : "text-gray-600 hover:text-classic-primary"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </div>
-
-        {/* Contact CTA */}
-        <div className="hidden md:block">
-          <Link
-            href="/contact"
-            className="inline-flex items-center px-5 py-2.5 text-sm font-semibold text-white bg-classic-primary rounded-md hover:bg-classic-primary-light transition-all duration-300 hover:shadow-lg"
-          >
-            Schedule Visit
+    <>
+      {/* Desktop Header */}
+      <header className={`hidden md:block sticky top-0 z-50 w-full transition-all duration-300 ${scrolled ? "bg-white/98 shadow-lg backdrop-blur-md" : "bg-white/95 shadow-sm backdrop-blur-sm"} border-b border-gray-200`}>
+        <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+          <Link href="/" className="flex items-center gap-1 group">
+            <span className="text-2xl font-classic font-bold text-classic-primary group-hover:text-classic-gold transition-colors">Natraj</span>
+            <span className="text-xl font-light text-gray-500">Properties</span>
           </Link>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-2xl text-classic-primary hover:text-classic-gold transition-colors"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle navigation menu"
-          aria-expanded={menuOpen}
-        >
-          {menuOpen ? (
-            <span className="text-xl">✕</span>
-          ) : (
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          )}
-        </button>
-      </nav>
-
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 shadow-lg animate-fade-in">
-          <div className="px-6 py-4 space-y-1">
+          <div className="flex items-center space-x-8 lg:space-x-10">
             {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`block py-3 px-4 text-lg rounded-md transition-colors ${
-                  pathname === link.href
-                    ? "bg-classic-bg text-classic-primary font-semibold"
-                    : "text-gray-700 hover:bg-classic-bg hover:text-classic-primary"
-                }`}
-              >
+              <Link key={link.href} href={link.href} className={`relative py-2 text-sm font-medium tracking-wide transition-colors ${pathname === link.href ? "text-classic-primary font-semibold after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-classic-gold after:rounded-full" : "text-gray-600 hover:text-classic-primary"}`}>
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/contact"
-              className="block mt-2 py-3 px-4 text-center text-white bg-classic-primary rounded-md font-semibold hover:bg-classic-primary-light transition-colors"
-            >
+            <Link href="/contact" className="ml-2 px-5 py-2.5 text-sm font-semibold text-white bg-classic-primary rounded-md hover:bg-classic-primary-light transition-all duration-300 hover:shadow-lg">
               Schedule Visit
             </Link>
           </div>
+        </nav>
+      </header>
+
+      {/* Mobile Top Bar */}
+      <header className="md:hidden sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+        <div className="flex items-center justify-center px-4 py-2">
+          <Link href="/" className="flex items-center gap-1">
+            <span className="text-xl font-classic font-bold text-classic-primary">Natraj</span>
+            <span className="text-lg font-light text-gray-500">Properties</span>
+          </Link>
         </div>
-      )}
-    </header>
+      </header>
+
+      {/* Mobile Bottom Navigation */}
+      <nav className="md:hidden fixed bottom-0 inset-x-0 z-50 bg-white border-t border-gray-200 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] safe-area-inset-bottom">
+        <div className="flex items-center justify-around h-16 px-2">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            const icon = icons[link.iconKey as keyof typeof icons];
+            return (
+              <Link key={link.href} href={link.href} className={`flex flex-col items-center gap-0.5 min-w-[64px] py-1 px-2 rounded-xl transition-all duration-200 ${isActive ? "text-classic-primary scale-105" : "text-gray-500 hover:text-classic-primary"}`}>
+                <span>{icon}</span>
+                <span className="text-[10px] font-medium leading-none">{link.label}</span>
+                {isActive && <span className="mt-0.5 w-1 h-1 bg-classic-gold rounded-full" />}
+              </Link>
+            );
+          })}
+          <a href="tel:+919876543210" className="flex flex-col items-center gap-0.5 min-w-[64px] py-1 px-2 rounded-xl text-green-600 hover:scale-105 transition-all duration-200">
+            <span>{icons.call}</span>
+            <span className="text-[10px] font-medium leading-none">Call</span>
+          </a>
+        </div>
+      </nav>
+    </>
   );
 }
