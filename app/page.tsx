@@ -1,7 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import React from "react";
 import PropertyCard from "@/components/PropertyCard";
 import TestimonialCard from "@/components/TestimonialCard";
+import { MdLocationOn, MdElectricBolt, MdHandshake } from "react-icons/md";
+import { FaBuilding, FaKey, FaShieldAlt } from "react-icons/fa";
+import { GiOfficeChair } from "react-icons/gi";
+
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -190,7 +195,7 @@ export default function Home() {
 </section>
 
       {/* Featured Properties */}
-  <section className="py-24 bg-classic-bg overflow-hidden">
+  <section className="py-12 bg-classic-bg overflow-hidden">
   <div className="max-w-7xl mx-auto px-6">
     <div className="text-center mb-12">
       <span className="text-classic-gold text-sm font-semibold tracking-widest uppercase">
@@ -230,7 +235,7 @@ export default function Home() {
       </div>
     </div>
 
-    <div className="mt-12 text-center">
+    <div className="text-center">
       <Link
         href="/listings"
         className="inline-flex items-center text-classic-gold font-semibold hover:text-classic-gold-light transition-colors underline underline-offset-4 group"
@@ -256,53 +261,78 @@ export default function Home() {
 </section>
 
       {/* Why Choose Us */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <span className="text-classic-gold text-sm font-semibold tracking-widest uppercase">
-              Why Choose Us
-            </span>
-            <h2 className="font-classic text-4xl md:text-5xl font-bold text-classic-primary mt-2 mb-4">
-              The Natraj Advantage
-            </h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">
-              We bring decades of expertise to help you find the perfect
-              commercial space.
-            </p>
-          </div>
-          <div className="grid gap-10 md:grid-cols-3">
-            {[
-              {
-                icon: "📍",
-                title: "Prime Locations",
-                desc: "All properties are in high-demand commercial hubs with excellent connectivity and visibility.",
+  <section className="py-12 bg-gradient-to-br from-white via-classic-bg/30 to-white relative overflow-hidden">
+  {/* Background decorative elements */}
+  <div className="absolute top-0 right-0 w-96 h-96 bg-classic-gold/5 rounded-full blur-3xl -z-10"></div>
+  <div className="absolute bottom-0 left-0 w-96 h-96 bg-classic-primary/5 rounded-full blur-3xl -z-10"></div>
+  
+  <div className="max-w-7xl mx-auto px-6 relative z-10">
+    <div className="text-center mb-16">
+      <span className="text-classic-gold text-sm font-semibold tracking-widest uppercase inline-flex items-center gap-2">
+        <span className="w-8 h-px bg-classic-gold"></span>
+        Why Choose Us
+        <span className="w-8 h-px bg-classic-gold"></span>
+      </span>
+      <h2 className="font-classic text-4xl md:text-5xl font-bold text-classic-primary mt-4 mb-4">
+        The Natraj Advantage
+      </h2>
+      <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+        We bring decades of expertise to help you find the perfect commercial space.
+      </p>
+    </div>
+
+    <div className="grid gap-8 md:grid-cols-3">
+      {[
+        {
+          title: "Prime Locations",
+          desc: "All properties are in high-demand commercial hubs with excellent connectivity and visibility.",
+        },
+        {
+          title: "Ready to Move",
+          desc: "Fully furnished spaces with power backup, high-speed internet – just plug and play.",
+        },
+        {
+          title: "Transparent Deals",
+          desc: "Zero brokerage on direct leases, clear terms, and hassle-free paperwork.",
               },
-              {
-                icon: "⚡",
-                title: "Ready to Move",
-                desc: "Fully furnished spaces with power backup, high-speed internet – just plug and play.",
-              },
-              {
-                icon: "🤝",
-                title: "Transparent Deals",
-                desc: "Zero brokerage on direct leases, clear terms, and hassle-free paperwork.",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="group bg-classic-bg p-8 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 border border-transparent hover:border-classic-gold/30 animate-slide-up"
-                style={{ animationDelay: `${i * 100}ms` }}
-              >
-                <div className="text-5xl mb-4">{item.icon}</div>
-                <h3 className="font-classic text-2xl font-semibold text-classic-primary mb-3 group-hover:text-classic-gold transition-colors">
-                  {item.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
+        {
+  title: "24/7 Security",
+  desc: "Round-the-clock security with CCTV surveillance, trained guards, and secure access control systems.",
+  hoverGradient: "from-blue-600/90 to-blue-700/90",
+},
+{
+  title: "Ample Parking",
+  desc: "Dedicated parking spaces for employees and visitors with EV charging stations available.",
+  hoverGradient: "from-purple-600/90 to-purple-700/90",
+},
+{
+  title: "Modern Infrastructure",
+  desc: "State-of-the-art buildings with premium amenities, high-speed elevators, and smart features.",
+  hoverGradient: "from-cyan-600/90 to-cyan-700/90",
+},
+      ].map((item, i) => (
+        <div
+          key={i}
+          className="group relative rounded-2xl transition-all duration-500 hover:-translate-y-2"
+          style={{ animationDelay: `${i * 100}ms` }}
+        >
+          {/* Card content */}
+          <div className="relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden h-full">
+            {/* Gradient top border effect on hover */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-classic-gold to-classic-gold-light scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+            <div className="p-8">
+                          
+              <h3 className="font-classic text-2xl font-bold text-classic-primary mb-3  transition-colors duration-300">
+                {item.title}
+              </h3>
+              <p className="text-gray-600 leading-relaxed flex-grow">{item.desc}</p>
+            </div>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* Testimonials */}
       <section className="py-24 bg-classic-bg">
