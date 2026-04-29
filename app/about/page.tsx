@@ -32,16 +32,6 @@ const teamMembers = [
 export default function AboutPage() {
   return (
     <>
-      {/* Breadcrumb */}
-      <div className="max-w-7xl mx-auto px-6 pt-8">
-        <nav className="text-sm text-gray-500 mb-8" aria-label="Breadcrumb">
-          <Link href="/" className="hover:text-classic-gold transition-colors">
-            Home
-          </Link>
-          <span className="mx-2">/</span>
-          <span className="text-classic-primary font-medium">About</span>
-        </nav>
-      </div>
 
       {/* Hero Section */}
       <section className="py-16 bg-white">

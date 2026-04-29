@@ -77,153 +77,183 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        {/* Background Image with Gentle Zoom */}
-        <div className="absolute inset-0 z-0 animate-gentle-zoom">
-          <Image
-            src="/hero-office.jpg"
-            alt="Premium office building by Natraj Properties"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-        </div>
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 z-10 animate-gradient" />
-        {/* Content */}
-        <div className="relative z-20 text-center text-white px-4 max-w-4xl animate-slide-up pt-20">
-          <h1 className="font-classic text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            Timeless Offices,
-            <br />
-            Distinguished Address
-          </h1>
-          <p className="text-xl md:text-2xl mb-10 text-gray-200 leading-relaxed max-w-2xl mx-auto">
-            Premium commercial spaces for rent in Mohali & Chandigarh.
-            <br />
-            Where your business finds its perfect home.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link
-              href="/listings"
-              className="group inline-flex items-center justify-center px-8 py-4 rounded-md bg-white text-classic-primary font-semibold shadow-lg hover:bg-gray-50 transition-all duration-300 hover:scale-105"
-            >
-              Explore Listings
-              <svg
-                className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center px-8 py-4 rounded-md border-2 border-white text-white font-semibold hover:bg-white/10 transition-all duration-300 hover:scale-105"
-            >
-              Schedule Visit
-            </Link>
-          </div>
-          {/* Scroll Indicator */}
-          <div className="mt-16 animate-pulse-slow">
-            <svg
-              className="w-6 h-6 mx-auto"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"
-              />
-            </svg>
-          </div>
-        </div>
-      </section>
+<section className="relative min-h-[85vh] flex items-center overflow-hidden text-classic-primary">
+  
+  {/* Background Image */}
+  <div className="absolute inset-0 z-0">
+    <Image
+      src="/hero-office.jpg"
+      alt="Natraj Properties"
+      fill
+      priority
+      sizes="100vw"
+      className="object-cover"
+    />
+  </div>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {[
-              { number: "50+", label: "Offices Leased" },
-              { number: "15+", label: "Years Experience" },
-              { number: "100%", label: "Client Satisfaction" },
-              { number: "2", label: "Prime Cities" },
-            ].map((stat, idx) => (
-              <div
-                key={idx}
-                className="animate-slide-up"
-                style={{ animationDelay: `${idx * 100}ms` }}
-              >
-                <div className="text-4xl md:text-5xl font-classic font-bold text-classic-gold mb-2">
-                  {stat.number}
-                </div>
-                <p className="text-gray-500 text-sm">{stat.label}</p>
-              </div>
-            ))}
-          </div>
+  {/* Light Overlay (important for readability) */}
+  <div className="absolute inset-0 z-0 bg-white/85 backdrop-blur-[2px]" />
+
+  {/* Soft Gradient Accents (still visible on top) */}
+  <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-classic-gold/20 blur-xl z-10" />
+  <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-classic-primary/10 blur-xl z-10" />
+
+  {/* Content */}
+  <div className="relative z-20 max-w-7xl mx-auto w-full px-5 md:px-8 pt-20 pb-14">
+    <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
+      
+      {/* Left Content */}
+      <div>
+        <p className="inline-flex mb-6 px-4 py-2 rounded-full border border-classic-primary/15 bg-white/70 text-sm font-medium text-classic-primary shadow-sm">
+          Natraj Properties • Mohali & Chandigarh
+        </p>
+
+        <h1 className="font-classic text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight">
+          Find a Property That
+          <br />
+          <span className="text-classic-gold">Works for Your Future</span>
+        </h1>
+
+        <p className="mt-6 max-w-2xl text-base md:text-xl leading-relaxed text-gray-600">
+          Premium offices, showrooms, and commercial spaces in prime locations —
+          selected with trust, clarity, and long-term value in mind.
+        </p>
+
+        <div className="mt-10 flex flex-col sm:flex-row gap-4">
+          <Link
+            href="/listings"
+            className="inline-flex items-center justify-center rounded-lg bg-classic-primary px-8 py-4 font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-classic-gold"
+          >
+            Browse Properties
+          </Link>
+
+          <Link
+            href="/contact"
+            className="inline-flex items-center justify-center rounded-lg border border-classic-primary/20 bg-white px-8 py-4 font-semibold text-classic-primary shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-classic-gold hover:text-classic-gold"
+          >
+            Get Consultation
+          </Link>
         </div>
-      </section>
+      </div>
+
+      {/* Right Card */}
+      <div className="rounded-3xl border border-classic-primary/10 bg-white/90 backdrop-blur-md p-6 md:p-8 shadow-xl">
+        <p className="text-sm font-medium text-classic-gold mb-3">
+          Why Choose Us
+        </p>
+
+        <h2 className="text-2xl md:text-3xl font-bold text-classic-primary mb-6">
+          Local property guidance with verified options.
+        </h2>
+
+        <div className="space-y-5">
+          {[
+            "Commercial spaces in prime business areas",
+            "Transparent dealing and practical advice",
+            "Quick site visits and negotiation support",
+            "Options for offices, showrooms, and investment properties",
+          ].map((item, index) => (
+            <div key={index} className="flex gap-3">
+              <span className="mt-1 flex h-6 w-6 items-center justify-center rounded-full bg-classic-gold/15 text-classic-gold text-sm">
+                ✓
+              </span>
+              <p className="text-gray-600">{item}</p>
+            </div>
+          ))}
+        </div>
+
+       <div className="mt-4 grid grid-cols-2 gap-4 border-t border-gray-200 pt-5">
+  {[
+    { number: "50+", label: "Offices Leased" },
+    { number: "15+", label: "Years Experience" },
+    { number: "100%", label: "Client Satisfaction" },
+    { number: "2", label: "Prime Cities" },
+  ].map((stat, idx) => (
+    <div
+      key={idx}
+      className="text-center animate-slide-up"
+      style={{ animationDelay: `${idx * 100}ms` }}
+    >
+      <p className="text-2xl md:text-3xl font-bold text-classic-primary">
+        {stat.number}
+      </p>
+      <p className="text-xs md:text-sm text-gray-500 mt-1">
+        {stat.label}
+      </p>
+    </div>
+  ))}
+</div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
       {/* Featured Properties */}
-      <section className="py-24 bg-classic-bg">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <span className="text-classic-gold text-sm font-semibold tracking-widest uppercase">
-              Our Portfolio
-            </span>
-            <h2 className="font-classic text-4xl md:text-5xl font-bold text-classic-primary mt-2 mb-4">
-              Featured Office Spaces
-            </h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">
-              Handpicked commercial properties ready for immediate occupancy.
-              Each space is selected for its prime location and exceptional
-              amenities.
-            </p>
+  <section className="py-24 bg-classic-bg overflow-hidden">
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="text-center mb-12">
+      <span className="text-classic-gold text-sm font-semibold tracking-widest uppercase">
+        Our Portfolio
+      </span>
+      <h2 className="font-classic text-4xl md:text-5xl font-bold text-classic-primary mt-2 mb-4">
+        Featured Properties
+      </h2>
+      <p className="text-gray-500 max-w-2xl mx-auto">
+        Handpicked commercial properties ready for immediate occupancy.
+        Each space is selected for its prime location and exceptional
+        amenities.
+      </p>
+    </div>
+
+    {/* Horizontal Scroll Container */}
+    <div className="relative">
+      {/* Horizontal Scrollable Cards */}
+      <div
+        id="horizontalScroll"
+        className="flex gap-6 overflow-x-auto pb-8 -mx-2 px-2"
+        style={{ 
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+          WebkitOverflowScrolling: 'touch'
+        }}
+      >
+        {featuredProperties.map((prop, idx) => (
+          <div
+            key={idx}
+            className="flex-shrink-0 w-[280px] md:w-[320px] lg:w-[350px] animate-slide-up"
+            style={{ animationDelay: `${idx * 100}ms` }}
+          >
+            <PropertyCard {...prop} />
           </div>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {featuredProperties.map((prop, idx) => (
-              <div
-                key={idx}
-                className="animate-slide-up"
-                style={{ animationDelay: `${idx * 150}ms` }}
-              >
-                <PropertyCard {...prop} />
-              </div>
-            ))}
-          </div>
-          <div className="mt-12 text-center">
-            <Link
-              href="/listings"
-              className="inline-flex items-center text-classic-gold font-semibold hover:text-classic-gold-light transition-colors underline underline-offset-4"
-            >
-              View all listings
-              <svg
-                className="ml-2 w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </Link>
-          </div>
-        </div>
-      </section>
+        ))}
+      </div>
+    </div>
+
+    <div className="mt-12 text-center">
+      <Link
+        href="/listings"
+        className="inline-flex items-center text-classic-gold font-semibold hover:text-classic-gold-light transition-colors underline underline-offset-4 group"
+      >
+        View all listings
+        <svg
+          className="ml-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M17 8l4 4m0 0l-4 4m4-4H3"
+          />
+        </svg>
+      </Link>
+    </div>
+  </div>
+
+</section>
 
       {/* Why Choose Us */}
       <section className="py-24 bg-white">

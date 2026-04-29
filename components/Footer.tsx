@@ -6,32 +6,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-classic-primary text-gray-300">
-      {/* Newsletter */}
-      <div className="border-b border-gray-700/50">
-        <div className="mx-auto max-w-7xl px-6 py-10 grid md:grid-cols-2 gap-8 items-center">
-          <div>
-            <h3 className="font-classic text-2xl font-semibold text-white mb-2">
-              Stay Informed
-            </h3>
-            <p className="text-sm text-gray-400">
-              Subscribe for exclusive property listings and market insights.
-            </p>
-          </div>
-          <form className="flex gap-3" onSubmit={(e) => e.preventDefault()}>
-            <input
-              type="email"
-              placeholder="Your email address"
-              className="flex-1 rounded-md border border-gray-600 bg-gray-800 px-4 py-3 text-sm text-white placeholder-gray-400 outline-none focus:border-classic-gold focus:ring-1 focus:ring-classic-gold transition-colors"
-            />
-            <button
-              type="submit"
-              className="rounded-md bg-classic-gold px-6 py-3 text-sm font-semibold text-white hover:bg-classic-gold-light transition-colors duration-300"
-            >
-              Subscribe
-            </button>
-          </form>
-        </div>
-      </div>
+   
 
       {/* Main Footer */}
       <div className="mx-auto max-w-7xl px-6 py-16">
@@ -175,10 +150,10 @@ export default function Footer() {
         <div className="mx-auto max-w-7xl px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
           <p>&copy; {currentYear} Natraj Properties. All rights reserved.</p>
           <div className="flex gap-6">
-            <Link href="#" className="hover:text-classic-gold">
+            <Link href="privacy-policy" className="hover:text-classic-gold">
               Privacy Policy
             </Link>
-            <Link href="#" className="hover:text-classic-gold">
+            <Link href="/terms-of-service" className="hover:text-classic-gold">
               Terms of Service
             </Link>
             <Link href="#" className="hover:text-classic-gold">

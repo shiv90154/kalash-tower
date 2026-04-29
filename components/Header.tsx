@@ -40,7 +40,7 @@ export default function Header() {
           </Link>
           <div className="flex items-center space-x-8 lg:space-x-10">
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} className={`relative py-2 text-sm font-medium tracking-wide transition-colors ${pathname === link.href ? "text-classic-primary font-semibold after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-classic-gold after:rounded-full" : "text-gray-600 hover:text-classic-primary"}`}>
+              <Link key={link.href} href={link.href} className={`relative py-2  tracking-wide transition-colors font-bold ${pathname === link.href ? "text-classic-primary font-semibold after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-classic-gold after:rounded-full" : "text-gray-600 hover:text-classic-primary"}`}>
                 {link.label}
               </Link>
             ))}
@@ -75,7 +75,7 @@ export default function Header() {
               </Link>
             );
           })}
-          <a href="tel:+919876543210" className="flex flex-col items-center gap-0.5 min-w-[64px] py-1 px-2 rounded-xl text-green-600 hover:scale-105 transition-all duration-200">
+          <a href="tel:+919876543210" className="flex flex-col items-center gap-0.5 min-w-[64px] py-1 px-2 rounded-xl text-gray-500 hover:scale-105 transition-all duration-200">
             <span>{icons.call}</span>
             <span className="text-[10px] font-medium leading-none">Call</span>
           </a>
