@@ -3,24 +3,98 @@
 import { useState, useTransition } from "react";
 import { sendEmail } from "@/app/actions/sendEmail";
 
+// ---------- validation helper ----------
+interface FormErrors {
+  name?: string;
+  email?: string;
+  phone?: string;
+  requirement?: string;
+  message?: string;
+}
+
+function validate(formData: {
+  name: string;
+  email: string;
+  phone: string;
+  requirement: string;
+}): FormErrors {
+  const errors: FormErrors = {};
+
+  // name – required & must not contain digits
+  if (!formData.name.trim()) {
+    errors.name = "Full name is required.";
+  } else if (/\d/.test(formData.name)) {
+    errors.name = "Name must not contain numbers.";
+  }
+
+  // email – required & valid format
+  if (!formData.email.trim()) {
+    errors.email = "Email address is required.";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    errors.email = "Please enter a valid email address.";
+  }
+
+  // phone – required & 10 digits (after stripping non‑digits)
+  const phoneDigits = formData.phone.replace(/\D/g, ""); // remove non-digits
+  if (!formData.phone.trim()) {
+    errors.phone = "Phone number is required.";
+  } else if (phoneDigits.length !== 10) {
+    errors.phone = "Phone number must be exactly 10 digits.";
+  }
+
+  // requirement – required (select option not empty)
+  if (!formData.requirement) {
+    errors.requirement = "Please select a requirement.";
+  }
+
+  return errors;
+}
+
+// ---------- component ----------
 export default function ContactForm() {
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "", requirement: "", message: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    requirement: "",
+    message: "",
+  });
   const [submitted, setSubmitted] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [errors, setErrors] = useState<FormErrors>({});
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    // clear field error when user starts typing
+    if (errors[name as keyof FormErrors]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
+    // also clear server error on any change
+    if (serverError) setServerError(null);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setServerError(null);
+
+    // run client‑side validation
+    const validationErrors = validate(formData);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    // all good, proceed
     startTransition(async () => {
       const result = await sendEmail(formData);
       if (result.success) {
         setSubmitted(true);
         setFormData({ name: "", email: "", phone: "", requirement: "", message: "" });
+        setErrors({});
       } else {
         setServerError(result.error || "Something went wrong.");
       }
@@ -31,10 +105,14 @@ export default function ContactForm() {
     return (
       <div className="bg-green-50 border border-green-200 rounded-lg p-8 text-center animate-slide-up">
         <div className="text-5xl mb-4">✓</div>
-        <h3 className="text-2xl font-classic font-semibold text-green-800 mb-2">Thank You!</h3>
-        <p className="text-green-700 mb-6">Your enquiry has been received. Our team will contact you within 24 hours.</p>
-        <button 
-          onClick={() => setSubmitted(false)} 
+        <h3 className="text-2xl font-classic font-semibold text-green-800 mb-2">
+          Thank You!
+        </h3>
+        <p className="text-green-700 mb-6">
+          Your enquiry has been received. Our team will contact you within 24 hours.
+        </p>
+        <button
+          onClick={() => setSubmitted(false)}
           className="text-green-700 underline hover:text-green-900 transition-colors"
         >
           Submit another enquiry
@@ -50,7 +128,7 @@ export default function ContactForm() {
           {serverError}
         </div>
       )}
-      
+
       {/* Full Name */}
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -64,8 +142,11 @@ export default function ContactForm() {
           value={formData.name}
           onChange={handleChange}
           placeholder="Mr. / Ms. Full Name"
-          className="w-full rounded-md border border-gray-300 px-5 py-3 focus:outline-none focus:ring-2 focus:ring-classic-primary focus:border-transparent transition-all duration-200"
+          className={`w-full rounded-md border px-5 py-3 focus:outline-none focus:ring-2 focus:ring-classic-primary focus:border-transparent transition-all duration-200 ${
+            errors.name ? "border-red-400 bg-red-50" : "border-gray-300"
+          }`}
         />
+        {errors.name && <p className="text-red-600 text-xs mt-1">{errors.name}</p>}
       </div>
 
       {/* Email Address */}
@@ -81,8 +162,11 @@ export default function ContactForm() {
           value={formData.email}
           onChange={handleChange}
           placeholder="your@email.com"
-          className="w-full rounded-md border border-gray-300 px-5 py-3 focus:outline-none focus:ring-2 focus:ring-classic-primary focus:border-transparent transition-all duration-200"
+          className={`w-full rounded-md border px-5 py-3 focus:outline-none focus:ring-2 focus:ring-classic-primary focus:border-transparent transition-all duration-200 ${
+            errors.email ? "border-red-400 bg-red-50" : "border-gray-300"
+          }`}
         />
+        {errors.email && <p className="text-red-600 text-xs mt-1">{errors.email}</p>}
       </div>
 
       {/* Phone Number */}
@@ -97,9 +181,12 @@ export default function ContactForm() {
           required
           value={formData.phone}
           onChange={handleChange}
-          placeholder="+91 98765 43210"
-          className="w-full rounded-md border border-gray-300 px-5 py-3 focus:outline-none focus:ring-2 focus:ring-classic-primary focus:border-transparent transition-all duration-200"
+          placeholder="10‑digit mobile number"
+          className={`w-full rounded-md border px-5 py-3 focus:outline-none focus:ring-2 focus:ring-classic-primary focus:border-transparent transition-all duration-200 ${
+            errors.phone ? "border-red-400 bg-red-50" : "border-gray-300"
+          }`}
         />
+        {errors.phone && <p className="text-red-600 text-xs mt-1">{errors.phone}</p>}
       </div>
 
       {/* Requirement */}
@@ -113,12 +200,14 @@ export default function ContactForm() {
           required
           value={formData.requirement}
           onChange={handleChange}
-          className="w-full rounded-md border border-gray-300 px-5 py-3 focus:outline-none focus:ring-2 focus:ring-classic-primary focus:border-transparent transition-all duration-200 bg-white appearance-none cursor-pointer"
+          className={`w-full rounded-md border px-5 py-3 focus:outline-none focus:ring-2 focus:ring-classic-primary focus:border-transparent transition-all duration-200 bg-white appearance-none cursor-pointer ${
+            errors.requirement ? "border-red-400 bg-red-50" : "border-gray-300"
+          }`}
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'right 1rem center',
-            backgroundSize: '1.5rem'
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "right 1rem center",
+            backgroundSize: "1.5rem",
           }}
         >
           <option value="">Select requirement</option>
@@ -127,6 +216,9 @@ export default function ContactForm() {
           <option value="large">Large Office (1500+ sq.ft.)</option>
           <option value="custom">Custom Requirement</option>
         </select>
+        {errors.requirement && (
+          <p className="text-red-600 text-xs mt-1">{errors.requirement}</p>
+        )}
       </div>
 
       {/* Message */}
@@ -153,9 +245,25 @@ export default function ContactForm() {
       >
         {isPending ? (
           <>
-            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            <svg
+              className="animate-spin h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
             </svg>
             Sending...
           </>
@@ -169,8 +277,8 @@ export default function ContactForm() {
         By submitting this form, you agree to our{" "}
         <a href="/privacy" className="text-classic-primary hover:underline">
           Privacy Policy
-        </a>
-        {" "}and consent to being contacted.
+        </a>{" "}
+        and consent to being contacted.
       </p>
     </form>
   );
