@@ -33,28 +33,33 @@ export default function Header() {
     <>
       {/* Desktop Header */}
       <header className={`hidden md:block sticky top-0 z-50 w-full transition-all duration-300 ${scrolled ? "bg-white/98 shadow-lg backdrop-blur-md" : "bg-white/95 shadow-sm backdrop-blur-sm"} border-b border-gray-200`}>
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link href="/" className="flex items-center gap-1 group">
+        <nav className="relative mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+          {/* Left: Brand */}
+          <Link href="/" className="flex  items-center gap-1 group cursor-pointer">
             <span className="text-2xl font-classic font-bold text-classic-primary group-hover:text-classic-gold transition-colors">Natraj</span>
             <span className="text-xl font-light text-gray-500">Properties</span>
           </Link>
-          <div className="flex items-center space-x-8 lg:space-x-10">
+
+          {/* Center: Navigation Links (absolutely centered) */}
+          <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center space-x-8 lg:space-x-10">
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} className={`relative py-2  tracking-wide transition-colors font-bold ${pathname === link.href ? "text-classic-primary font-semibold after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-classic-gold after:rounded-full" : "text-gray-600 hover:text-classic-primary"}`}>
+              <Link key={link.href} href={link.href} className={`relative py-2 tracking-wide transition-colors font-bold cursor-pointer ${pathname === link.href ? "text-classic-primary font-semibold after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-classic-gold after:rounded-full" : "text-gray-600 hover:text-classic-primary"}`}>
                 {link.label}
               </Link>
             ))}
-            <Link href="/contact" className="ml-2 px-5 py-2.5 text-sm font-semibold text-white bg-classic-primary rounded-md hover:bg-classic-primary-light transition-all duration-300 hover:shadow-lg">
-              Schedule Visit
-            </Link>
           </div>
+
+          {/* Right: Schedule Visit Button */}
+          <Link href="/contact" className="ml-auto px-5 py-2.5 text-sm font-semibold text-white bg-classic-primary rounded-md hover:bg-classic-primary-light transition-all duration-300 hover:shadow-lg cursor-pointer">
+            Schedule Visit
+          </Link>
         </nav>
       </header>
 
       {/* Mobile Top Bar */}
       <header className="md:hidden sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
         <div className="flex items-center justify-center px-4 py-2">
-          <Link href="/" className="flex items-center gap-1">
+          <Link href="/" className="flex items-center gap-1 cursor-pointer">
             <span className="text-xl font-classic font-bold text-classic-primary">Natraj</span>
             <span className="text-lg font-light text-gray-500">Properties</span>
           </Link>
@@ -68,14 +73,14 @@ export default function Header() {
             const isActive = pathname === link.href;
             const icon = icons[link.iconKey as keyof typeof icons];
             return (
-              <Link key={link.href} href={link.href} className={`flex flex-col items-center gap-0.5 min-w-[64px] py-1 px-2 rounded-xl transition-all duration-200 ${isActive ? "text-classic-primary scale-105" : "text-gray-500 hover:text-classic-primary"}`}>
+              <Link key={link.href} href={link.href} className={`flex flex-col items-center gap-0.5 min-w-[64px] py-1 px-2 rounded-xl transition-all duration-200 cursor-pointer ${isActive ? "text-classic-primary scale-105" : "text-gray-500 hover:text-classic-primary"}`}>
                 <span>{icon}</span>
                 <span className="text-[10px] font-medium leading-none">{link.label}</span>
                 {isActive && <span className="mt-0.5 w-1 h-1 bg-classic-gold rounded-full" />}
               </Link>
             );
           })}
-          <a href="tel:+919876543210" className="flex flex-col items-center gap-0.5 min-w-[64px] py-1 px-2 rounded-xl text-gray-500 hover:scale-105 transition-all duration-200">
+          <a href="tel:+919876543210" className="flex flex-col items-center gap-0.5 min-w-[64px] py-1 px-2 rounded-xl text-gray-500 hover:scale-105 transition-all duration-200 cursor-pointer">
             <span>{icons.call}</span>
             <span className="text-[10px] font-medium leading-none">Call</span>
           </a>
