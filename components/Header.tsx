@@ -38,14 +38,14 @@ export default function Header() {
           {/* Left: Brand */}
           <Link href="/" className="flex  items-center gap-1 group cursor-pointer">
             <Image src="/Natraj.png" alt="Natraj Properties Logo" width={32} height={32} className="rounded-full" />
-              <div className="flex flex-col leading-tight">
-    <span className="text-lg font-semibold text-black tracking-wide group-hover:text-classic-gold transition-colors duration-300">
-      Natraj
-    </span>
-    <span className="text-[10px] text-gray-500 tracking-wider uppercase">
-      Properties
-    </span>
-  </div>
+            <div className="flex flex-col leading-tight">
+              <span className="text-lg font-semibold text-black tracking-wide group-hover:text-classic-gold transition-colors duration-300">
+                Natraj
+              </span>
+              <span className="text-[10px] text-gray-500 tracking-wider uppercase">
+                Properties
+              </span>
+            </div>
           </Link>
 
           {/* Center: Navigation Links (absolutely centered) */}
