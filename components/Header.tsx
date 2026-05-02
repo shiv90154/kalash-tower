@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 const icons = {
   home: <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1-1m-6 0h4"/></svg>,
@@ -36,8 +37,15 @@ export default function Header() {
         <nav className="relative mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           {/* Left: Brand */}
           <Link href="/" className="flex  items-center gap-1 group cursor-pointer">
-            <span className="text-2xl font-classic font-bold text-classic-primary group-hover:text-classic-gold transition-colors">Natraj</span>
-            <span className="text-xl font-light text-gray-500">Properties</span>
+            <Image src="/Natraj.png" alt="Natraj Properties Logo" width={32} height={32} className="rounded-full" />
+              <div className="flex flex-col leading-tight">
+    <span className="text-lg font-semibold text-black tracking-wide group-hover:text-classic-gold transition-colors duration-300">
+      Natraj
+    </span>
+    <span className="text-[10px] text-gray-500 tracking-wider uppercase">
+      Properties
+    </span>
+  </div>
           </Link>
 
           {/* Center: Navigation Links (absolutely centered) */}
@@ -57,14 +65,37 @@ export default function Header() {
       </header>
 
       {/* Mobile Top Bar */}
-      <header className="md:hidden sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
-        <div className="flex items-center justify-center px-4 py-2">
-          <Link href="/" className="flex items-center gap-1 cursor-pointer">
-            <span className="text-xl font-classic font-bold text-classic-primary">Natraj</span>
-            <span className="text-lg font-light text-gray-500">Properties</span>
-          </Link>
-        </div>
-      </header>
+    <header className="md:hidden sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-200">
+  <div className="flex items-center justify-center px-4 py-3">
+    
+    <Link
+      href="/"
+      className="flex items-center gap-2 group"
+    >
+      {/* Logo */}
+      <div className="relative w-9 h-9 rounded-full overflow-hidden border border-gray-200 shadow-sm">
+        <Image
+          src="/Natraj.png"
+          alt="Natraj Properties Logo"
+          fill
+          sizes="36px"
+          className="object-cover"
+        />
+      </div>
+
+      {/* Brand */}
+      <div className="flex flex-col leading-tight text-center">
+        <span className="text-sm font-bold text-classic-primary tracking-wide">
+          Natraj
+        </span>
+        <span className="text-[6px] uppercase tracking-[0.18em] text-classic-gold">
+          Properties
+        </span>
+      </div>
+    </Link>
+
+  </div>
+</header>
 
       {/* Mobile Bottom Navigation */}
       <nav className="md:hidden fixed bottom-0 inset-x-0 z-50 bg-white border-t border-gray-200 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] safe-area-inset-bottom">

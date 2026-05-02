@@ -8,9 +8,36 @@ import { useState } from "react";
 
 export default function PropertyDetailClient({ property }: { property: any }) {
   const router = useRouter();
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const gallery = property?.gallery || [];
+  const gallery =
+    property?.gallery?.length > 0
+      ? property.gallery
+      : property?.images?.length > 0
+      ? property.images
+      : property?.imageSrc
+      ? [property.imageSrc]
+      : ["/images/listings/placeholder.jpg"];
+
+  const features = property?.features || property?.amenities || [];
+  const amenities = property?.amenities || [];
+  const nearby = property?.nearby || [];
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showAllImages, setShowAllImages] = useState(false);
+
+  const currentImage = gallery[currentImageIndex];
+
+  const goNextImage = () => {
+    setCurrentImageIndex((prev) =>
+      prev === gallery.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const goPrevImage = () => {
+    setCurrentImageIndex((prev) =>
+      prev === 0 ? gallery.length - 1 : prev - 1
+    );
+  };
 
   return (
     <section className="bg-classic-bg min-h-screen py-6 md:py-10">
@@ -24,14 +51,60 @@ export default function PropertyDetailClient({ property }: { property: any }) {
 
         {/* Desktop / Tablet Gallery */}
         <div className="hidden md:grid grid-cols-[minmax(0,1fr)_220px] lg:grid-cols-[minmax(0,1fr)_280px] gap-4 mb-8">
-          <div className="relative h-[460px] lg:h-[560px] rounded-xl overflow-hidden bg-gray-100 shadow-sm">
+          <div
+            onClick={goNextImage}
+            className="relative h-[460px] lg:h-[560px] rounded-xl overflow-hidden bg-gray-100 shadow-sm cursor-pointer group"
+          >
             <Image
-              src={gallery[currentImageIndex]}
+              src={currentImage}
               alt={property.title}
               fill
               className="object-cover"
               priority
             />
+
+            {gallery.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    goPrevImage();
+                  }}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/45 text-white flex items-center justify-center text-2xl hover:bg-black/70 transition z-20"
+                  aria-label="Previous image"
+                >
+                  ‹
+                </button>
+
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    goNextImage();
+                  }}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/45 text-white flex items-center justify-center text-2xl hover:bg-black/70 transition z-20"
+                  aria-label="Next image"
+                >
+                  ›
+                </button>
+
+                <div className="absolute bottom-4 left-4 bg-black/60 text-white text-sm px-3 py-1 rounded-full">
+                  {currentImageIndex + 1} / {gallery.length}
+                </div>
+              </>
+            )}
+
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowAllImages(true);
+              }}
+              className="absolute bottom-4 right-4 bg-white text-classic-primary px-4 py-2 rounded-lg text-sm font-semibold shadow hover:bg-classic-gold hover:text-white transition"
+            >
+              View all images
+            </button>
           </div>
 
           {gallery.length > 1 && (
@@ -54,7 +127,13 @@ export default function PropertyDetailClient({ property }: { property: any }) {
                   />
 
                   {idx === 2 && gallery.length > 3 && (
-                    <div className="absolute inset-0 bg-black/45 flex items-center justify-center text-white font-semibold text-lg">
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowAllImages(true);
+                      }}
+                      className="absolute inset-0 bg-black/45 flex items-center justify-center text-white font-semibold text-lg"
+                    >
                       +{gallery.length - 3} More
                     </div>
                   )}
@@ -64,28 +143,74 @@ export default function PropertyDetailClient({ property }: { property: any }) {
           )}
         </div>
 
-        {/* Mobile Gallery - current layout kept */}
+        {/* Mobile Gallery */}
         <div className="md:hidden space-y-3 mb-6">
-          <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-gray-100">
+          <div
+            onClick={goNextImage}
+            className="relative aspect-[4/3] rounded-lg overflow-hidden bg-gray-100 cursor-pointer"
+          >
             <Image
-              src={gallery[currentImageIndex]}
+              src={currentImage}
               alt={property.title}
               fill
               className="object-cover"
               priority
             />
+
+            {gallery.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    goPrevImage();
+                  }}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/45 text-white flex items-center justify-center text-xl z-20"
+                  aria-label="Previous image"
+                >
+                  ‹
+                </button>
+
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    goNextImage();
+                  }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/45 text-white flex items-center justify-center text-xl z-20"
+                  aria-label="Next image"
+                >
+                  ›
+                </button>
+
+                <div className="absolute bottom-3 left-3 bg-black/60 text-white text-xs px-3 py-1 rounded-full">
+                  {currentImageIndex + 1} / {gallery.length}
+                </div>
+              </>
+            )}
+
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowAllImages(true);
+              }}
+              className="absolute bottom-3 right-3 bg-white text-classic-primary px-3 py-1.5 rounded-md text-xs font-semibold shadow"
+            >
+              View all
+            </button>
           </div>
 
           {gallery.length > 1 && (
-            <div className="grid grid-cols-4 gap-2">
+            <div className="flex gap-2 overflow-x-auto pb-2">
               {gallery.map((img: string, idx: number) => (
                 <button
                   key={idx}
                   onClick={() => setCurrentImageIndex(idx)}
-                  className={`relative aspect-square rounded-md overflow-hidden border-2 transition-all ${
+                  className={`relative min-w-20 h-20 rounded-md overflow-hidden border-2 transition-all ${
                     currentImageIndex === idx
                       ? "border-classic-gold"
-                      : "border-transparent hover:border-classic-gold/50"
+                      : "border-transparent"
                   }`}
                 >
                   <Image
@@ -109,7 +234,9 @@ export default function PropertyDetailClient({ property }: { property: any }) {
               </h1>
 
               <div className="flex flex-wrap items-center gap-2 md:gap-4 text-gray-600 mb-4">
-                <span className="text-sm md:text-base">📍 {property.location}</span>
+                <span className="text-sm md:text-base">
+                  📍 {property.location}
+                </span>
                 <span className="text-classic-gold hidden md:inline">|</span>
                 <span className="text-sm md:text-base">📐 {property.size}</span>
               </div>
@@ -126,14 +253,16 @@ export default function PropertyDetailClient({ property }: { property: any }) {
               </div>
             </div>
 
-            <div className="bg-white rounded-xl border border-gray-200 p-5 md:p-6 shadow-sm">
-              <h2 className="text-lg md:text-xl font-semibold text-classic-primary mb-3">
-                Description
-              </h2>
-              <p className="text-gray-600 leading-relaxed text-sm md:text-base">
-                {property.description}
-              </p>
-            </div>
+            {property.description && (
+              <div className="bg-white rounded-xl border border-gray-200 p-5 md:p-6 shadow-sm">
+                <h2 className="text-lg md:text-xl font-semibold text-classic-primary mb-3">
+                  Description
+                </h2>
+                <p className="text-gray-600 leading-relaxed text-sm md:text-base">
+                  {property.description}
+                </p>
+              </div>
+            )}
 
             <div className="grid md:grid-cols-2 gap-5">
               <div className="bg-white rounded-xl border border-gray-200 p-5 md:p-6 shadow-sm">
@@ -141,7 +270,7 @@ export default function PropertyDetailClient({ property }: { property: any }) {
                   Key Features
                 </h2>
                 <div className="space-y-2">
-                  {property.features.map((feature: string, idx: number) => (
+                  {features.map((feature: string, idx: number) => (
                     <div
                       key={idx}
                       className="flex items-center gap-2 text-gray-600 text-sm md:text-base"
@@ -158,7 +287,7 @@ export default function PropertyDetailClient({ property }: { property: any }) {
                   Amenities
                 </h2>
                 <div className="flex flex-wrap gap-2">
-                  {property.amenities.map((amenity: string, idx: number) => (
+                  {amenities.map((amenity: string, idx: number) => (
                     <span
                       key={idx}
                       className="bg-classic-bg border border-classic-primary/20 text-classic-primary px-3 py-1 rounded-full text-xs md:text-sm"
@@ -192,22 +321,24 @@ export default function PropertyDetailClient({ property }: { property: any }) {
           </div>
 
           <aside className="space-y-5 lg:sticky lg:top-6">
-            <div className="bg-white rounded-xl border border-gray-200 p-5 md:p-6 shadow-sm">
-              <h2 className="text-lg md:text-xl font-semibold text-classic-primary mb-3">
-                Nearby Landmarks
-              </h2>
-              <div className="space-y-3">
-                {property.nearby.map((place: string, idx: number) => (
-                  <div
-                    key={idx}
-                    className="flex items-center gap-2 text-gray-600 text-sm md:text-base"
-                  >
-                    <span>📍</span>
-                    <span>{place}</span>
-                  </div>
-                ))}
+            {nearby.length > 0 && (
+              <div className="bg-white rounded-xl border border-gray-200 p-5 md:p-6 shadow-sm">
+                <h2 className="text-lg md:text-xl font-semibold text-classic-primary mb-3">
+                  Nearby Landmarks
+                </h2>
+                <div className="space-y-3">
+                  {nearby.map((place: string, idx: number) => (
+                    <div
+                      key={idx}
+                      className="flex items-center gap-2 text-gray-600 text-sm md:text-base"
+                    >
+                      <span>📍</span>
+                      <span>{place}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="bg-white rounded-xl border border-gray-200 p-5 md:p-6 shadow-sm">
               <h3 className="text-base md:text-lg font-semibold text-classic-primary mb-4">
@@ -228,6 +359,52 @@ export default function PropertyDetailClient({ property }: { property: any }) {
           </aside>
         </div>
       </div>
+
+      {/* All Images Grid Modal */}
+      {showAllImages && (
+        <div className="fixed inset-0 z-[9999] bg-black/80 p-4 md:p-8 overflow-y-auto">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-white text-xl md:text-2xl font-semibold">
+                All Images
+              </h2>
+
+              <button
+                type="button"
+                onClick={() => setShowAllImages(false)}
+                className="bg-white text-classic-primary px-4 py-2 rounded-lg font-semibold hover:bg-classic-gold hover:text-white transition"
+              >
+                Close
+              </button>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
+              {gallery.map((img: string, idx: number) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => {
+                    setCurrentImageIndex(idx);
+                    setShowAllImages(false);
+                  }}
+                  className="relative aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 border border-white/20 hover:border-classic-gold transition"
+                >
+                  <Image
+                    src={img}
+                    alt={`${property.title} - Image ${idx + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+
+                  <div className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded-full">
+                    {idx + 1}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
