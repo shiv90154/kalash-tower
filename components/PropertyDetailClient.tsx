@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { LocateFixed } from "lucide-react";
 
 export default function PropertyDetailClient({ property }: { property: any }) {
   const router = useRouter();
@@ -320,7 +321,7 @@ export default function PropertyDetailClient({ property }: { property: any }) {
             </div>
           </div>
 
-          <aside className="space-y-5 lg:sticky lg:top-6">
+          <aside className="space-y-5 lg:sticky lg:top-20">
             {nearby.length > 0 && (
               <div className="bg-white rounded-xl border border-gray-200 p-5 md:p-6 shadow-sm">
                 <h2 className="text-lg md:text-xl font-semibold text-classic-primary mb-3">
@@ -332,7 +333,7 @@ export default function PropertyDetailClient({ property }: { property: any }) {
                       key={idx}
                       className="flex items-center gap-2 text-gray-600 text-sm md:text-base"
                     >
-                      <span>📍</span>
+                      <span><LocateFixed/></span>
                       <span>{place}</span>
                     </div>
                   ))}

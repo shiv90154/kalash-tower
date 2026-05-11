@@ -266,18 +266,17 @@ function Section({
 
         <div className="flex-1 h-px bg-classic-gold/30 ml-3 hidden md:block" />
       </div>
-
-      <div className="grid gap-6 md:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {properties.map((property, idx) => (
-          <div
-            key={property.slug}
-            className="animate-slide-up"
-            style={{ animationDelay: `${idx * 100}ms` }}
-          >
-            <GalleryPropertyCard property={property} />
-          </div>
-        ))}
-      </div>
+<div className="flex flex-wrap justify-center gap-6 md:gap-8">
+  {properties.map((property, idx) => (
+    <div
+      key={property.slug}
+      className="animate-slide-up w-full sm:w-[48%] xl:w-[31%] max-w-[500px]"
+      style={{ animationDelay: `${idx * 100}ms` }}
+    >
+      <GalleryPropertyCard property={property} />
+    </div>
+  ))}
+</div>
     </div>
   );
 }
@@ -286,8 +285,6 @@ function Section({
 function GalleryPropertyCard({ property }: { property: Property }) {
   const images = property.images || [];
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-
-  const visibleImages = images.slice(0, 3);
 
   const currentImage =
     images[activeImageIndex] || "/images/listings/placeholder.jpg";
@@ -312,15 +309,6 @@ function GalleryPropertyCard({ property }: { property: Property }) {
     setActiveImageIndex((prev) =>
       prev === 0 ? images.length - 1 : prev - 1
     );
-  };
-
-  const selectImage = (
-    e: React.MouseEvent<HTMLButtonElement>,
-    index: number
-  ) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setActiveImageIndex(index);
   };
 
   return (
@@ -361,29 +349,6 @@ function GalleryPropertyCard({ property }: { property: Property }) {
             </div>
           )}
         </div>
-
-        {visibleImages.length > 1 && (
-          <div className="grid grid-cols-3 gap-2 p-3">
-            {visibleImages.map((image, index) => (
-              <button
-                key={image}
-                type="button"
-                onClick={(e) => selectImage(e, index)}
-                className={`h-20 rounded-lg overflow-hidden border-2 ${
-                  activeImageIndex === index
-                    ? "border-classic-primary"
-                    : "border-transparent"
-                }`}
-              >
-                <img
-                  src={image}
-                  alt={`${property.title} ${index + 1}`}
-                  className="w-full h-full object-cover"
-                />
-              </button>
-            ))}
-          </div>
-        )}
 
         <div className="p-5">
           <h3 className="font-classic text-xl font-bold text-classic-primary mb-2">

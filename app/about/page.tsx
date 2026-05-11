@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Target, Gem, Handshake } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -98,32 +98,53 @@ export default function AboutPage() {
           <div className="grid gap-8 md:grid-cols-3">
             {[
               {
-                icon: "🎯",
+                icon: <Target/>,
                 title: "Integrity",
                 desc: "Honest and transparent dealings in every transaction.",
               },
               {
-                icon: "💎",
+                icon: <Gem/>,
                 title: "Quality",
                 desc: "Only the finest commercial properties that meet our high standards.",
               },
               {
-                icon: "🤝",
+                icon: <Handshake/>,
                 title: "Commitment",
                 desc: "Dedicated to finding the perfect space for your business.",
               },
             ].map((value, idx) => (
-              <div
-                key={idx}
-                className="text-center animate-slide-up"
-                style={{ animationDelay: `${idx * 100}ms` }}
-              >
-                <div className="text-5xl mb-4">{value.icon}</div>
-                <h3 className="font-classic text-2xl font-semibold text-classic-primary mb-3">
-                  {value.title}
-                </h3>
-                <p className="text-gray-600">{value.desc}</p>
-              </div>
+           <div
+  key={idx}
+  className="group relative overflow-hidden rounded-3xl border border-classic-gold/30 bg-white/80 backdrop-blur-xl p-6 shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 animate-slide-up"
+  style={{ animationDelay: `${idx * 100}ms` }}
+>
+  {/* Glow Effect */}
+  <div className="absolute inset-0 bg-gradient-to-br from-classic-gold/5 via-transparent to-classic-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+  <div className="relative z-10 flex items-start gap-5">
+    
+    {/* Icon */}
+    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-classic-bg text-classic-primary shadow-sm group-hover:scale-110 transition-transform duration-300">
+      <div className="text-3xl">
+        {value.icon}
+      </div>
+    </div>
+
+    {/* Content */}
+    <div className="flex-1">
+      <h3 className="font-classic text-2xl font-bold text-classic-primary mb-2">
+        {value.title}
+      </h3>
+
+      <p className="text-gray-600 leading-relaxed text-sm md:text-base">
+        {value.desc}
+      </p>
+    </div>
+  </div>
+
+  {/* Bottom Accent */}
+  <div className="absolute bottom-0 left-0 h-1 w-0 bg-classic-gold transition-all duration-500 group-hover:w-full" />
+</div>
             ))}
           </div>
         </div>

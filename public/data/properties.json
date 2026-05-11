@@ -6,6 +6,7 @@
   "price": "₹ 18 Cr",
   "mainImage": "/images/Listing1/entrance.webp",
   "imageFolder": "Listing1",
+  "nearby":["Mohali Tower"," Quark City"],
   "slug": "industrial-building-phase-8a",
   "amenities": [
     "Rented to 4 Companies",

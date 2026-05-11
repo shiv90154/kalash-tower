@@ -17,7 +17,6 @@ type Property = {
   features?: string[];
   nearby?: string[];
 
-  // NEW optional fields
   mainImage?: string;
   images?: string[];
   gallery?: string[];
@@ -38,18 +37,15 @@ async function getProperties(): Promise<Property[]> {
 
 async function getPropertyImages(folder: string): Promise<string[]> {
   try {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    const dirPath = path.join(process.cwd(), "public", "images", folder);
 
-    const res = await fetch(`${baseUrl}/api/property-images/${folder}`, {
-      cache: "no-store",
-    });
+    const files = await fs.readdir(dirPath);
 
-    if (!res.ok) return [];
-
-    const data = await res.json();
-    return data.images || [];
-  } catch {
+    return files
+      .filter((file) => /\.(jpg|jpeg|png|webp|avif)$/i.test(file))
+      .map((file) => `/images/${folder}/${file}`);
+  } catch (error) {
+    console.error("Failed to read property images:", error);
     return [];
   }
 }
@@ -96,7 +92,7 @@ export default async function PropertyDetailPage({
     imageSrc:
       property.mainImage ||
       finalImages[0] ||
-      "/images/listings/placeholder.jpg",
+      "/images/placeholder.jpg",
   };
 
   return <PropertyDetailClient property={propertyWithImages} />;

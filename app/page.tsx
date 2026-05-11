@@ -234,45 +234,39 @@ export default async function Home() {
             </p>
           </div>
 
-          {featuredProperties.length > 0 ? (
-            <div
-              className="flex gap-6 overflow-x-auto pb-8 -mx-2 px-2"
-              style={{
-                scrollbarWidth: "none",
-                msOverflowStyle: "none",
-                WebkitOverflowScrolling: "touch",
-              }}
-            >
-              {featuredProperties.map((prop, idx) => (
-                <div
-                  key={prop.slug}
-                  className="flex-shrink-0 w-[95%] max-w-[350px] mx-auto md:mx-0 md:w-[320px] lg:w-[350px]"
-                  style={{ animationDelay: `${idx * 100}ms` }}
-                >
-                  <PropertyCard
-                    title={prop.title}
-                    location={prop.location}
-                    size={prop.size}
-                    price={prop.price}
-                    imageSrc={
-                      prop.imageSrc || "/images/listings/placeholder.jpg"
-                    }
-                    slug={prop.slug}
-                    amenities={prop.amenities}
-                  />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-center text-gray-500">
-              No featured properties found.
-            </p>
-          )}
-
+         {featuredProperties.length > 0 ? (
+  <div className="w-full flex justify-center">
+    <div className="flex flex-wrap justify-center gap-6 md:gap-8 w-full max-w-7xl">
+      {featuredProperties.map((prop, idx) => (
+        <div
+          key={prop.slug}
+          className="animate-slide-up w-full sm:w-[calc((100%-1.5rem)/2)] xl:w-[calc((100%-4rem)/3)]"
+          style={{ animationDelay: `${idx * 100}ms` }}
+        >
+          <PropertyCard
+            title={prop.title}
+            location={prop.location}
+            size={prop.size}
+            price={prop.price}
+            imageSrc={
+              prop.imageSrc || "/images/listings/placeholder.jpg"
+            }
+            slug={prop.slug}
+            amenities={prop.amenities}
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+) : (
+  <p className="text-center text-gray-500">
+    No featured properties found.
+  </p>
+)}
           <div className="text-center">
             <Link
               href="/listings"
-              className="inline-flex items-center text-classic-gold font-semibold hover:text-classic-gold-light transition-colors underline underline-offset-4 group"
+              className="inline-flex items-center text-classic-gold font-semibold hover:text-classic-gold-light transition-colors underline underline-offset-4 group py-8"
             >
               View all listings
               <svg
