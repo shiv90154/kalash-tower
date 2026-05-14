@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
 import WhatsAppButton from "@/components/WhatsAppButton";
-
+import HomeContactPopup from "@/components/HomeContactPopup";
 const playfair = Playfair_Display({
   subsets: ["latin"],
   display: "swap",
@@ -79,6 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="flex-1">{children}</main>
         <Footer />
         <BackToTop />
+        <HomeContactPopup />
         <WhatsAppButton />
       </body>
     </html>
