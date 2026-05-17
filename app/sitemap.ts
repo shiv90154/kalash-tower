@@ -1,32 +1,34 @@
 import { MetadataRoute } from "next";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://www.natrajproperties.com";
+const BASE_URL = "https://www.natrajproperties.com";
 
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/listings`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
+const listings = [
+  "industrial-building-phase-8a",
+];
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const staticRoutes = [
+    "",
+    "/about",
+    "/contact",
+    "/listings",
+    "/privacy-policy",
+    "/terms-of-service",
   ];
+
+  const staticPages = staticRoutes.map((route) => ({
+    url: `${BASE_URL}${route}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: route === "" ? 1 : 0.8,
+  }));
+
+  const listingPages = listings.map((slug) => ({
+    url: `${BASE_URL}/listings/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "daily" as const,
+    priority: 0.9,
+  }));
+
+  return [...staticPages, ...listingPages];
 }

@@ -3,7 +3,7 @@ export default function WhatsAppButton() {
   const message = encodeURIComponent("Hi Natraj Properties, I'm interested in an office space.");
   return (
 <a
-  href={`https://wa.me/919876543210?text=${encodeURIComponent("Hi Natraj Properties, I'm interested in a property.")}`}
+  href={`https://wa.me/+918565800002?text=${encodeURIComponent("Hi Natraj Properties, I'm interested in a property.")}`}
   target="_blank" 
   rel="noopener noreferrer"
   className="fixed bottom-20 md:bottom-8 right-8 z-50 flex items-center justify-center bg-green-600 text-white w-12 h-12 rounded-full shadow-lg  transition-all duration-300 hover:scale-105 group"
