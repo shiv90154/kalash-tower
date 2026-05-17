@@ -354,7 +354,7 @@ export default function PropertyDetailClient({ property }: { property: any }) {
               </Link>
 
               <p className="text-center text-gray-500 text-xs md:text-sm mt-3">
-                Call us: +91 98765 43210
+                Call us: +91 85658 00002
               </p>
             </div>
           </aside>

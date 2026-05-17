@@ -279,7 +279,7 @@ export default function TermsOfService() {
                   <span className="font-semibold">📧</span> legal@natrajproperties.com
                 </p>
                 <p className="flex items-center gap-2">
-                  <span className="font-semibold">📞</span> +91 98765 43210
+                  <span className="font-semibold">📞</span> +91 85658 00002
                 </p>
                 <p className="flex items-center gap-2">
                   <span className="font-semibold">🕒</span> Monday - Saturday, 10:00 AM to 7:00 PM
