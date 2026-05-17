@@ -5,9 +5,9 @@ import TestimonialCard from "@/components/TestimonialCard";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Home",
+  title: "Premium Office Spaces in Mohali & Chandigarh | Natraj Properties",
   description:
-    "Natraj Properties offers premium office spaces for rent in Mohali and Chandigarh. Explore our distinguished commercial properties.",
+    "Natraj Properties offers premium office spaces for rent in Mohali and Chandigarh. Explore modern commercial properties with prime locations, flexible layouts, and business-ready infrastructure.",
   alternates: {
     canonical: "/",
   },
