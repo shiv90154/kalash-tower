@@ -216,7 +216,7 @@ export default async function Home() {
       </section>
 
       {/* Featured Properties */}
-      <section className="py-12 bg-classic-bg overflow-hidden">
+      {/* <section className="py-12 bg-classic-bg overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
             <span className="text-classic-gold text-sm font-semibold tracking-widest uppercase">
@@ -285,7 +285,7 @@ export default async function Home() {
             </Link>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Why Choose Us */}
       <section className="py-12 bg-gradient-to-br from-white via-classic-bg/30 to-white relative overflow-hidden">

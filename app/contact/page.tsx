@@ -81,10 +81,10 @@ export default function ContactPage() {
           Phone
         </h3>
         <a
-          href="tel:+919876543210"
+          href="tel:+918565800002"
           className="text-gray-600 hover:text-classic-gold transition-colors"
         >
-          +91 98765 43210
+          +91 85658 00002
         </a>
       </div>
     </div>

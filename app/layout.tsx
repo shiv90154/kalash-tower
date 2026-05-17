@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://www.natrajproperties.com",
+    url: "https://www.natrajproperties.com/",
     siteName: "Natraj Properties",
     title: "Natraj Properties | Distinguished Spaces",
     description: "Corporate offices, flats, kothi & land in Mohali, Chandigarh. Book a visit today.",
