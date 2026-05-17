@@ -164,7 +164,7 @@ export default function Footer() {
           </p>
 
           {/* Social Icons */}
-          <div className="flex gap-4">
+          {/* <div className="flex gap-4">
             {[
               {
                 name: "Facebook",
@@ -217,7 +217,7 @@ export default function Footer() {
                 {social.icon}
               </a>
             ))}
-          </div>
+          </div> */}
 
           {/* Footer Links */}
           <div className="flex gap-6 flex-wrap justify-center">
