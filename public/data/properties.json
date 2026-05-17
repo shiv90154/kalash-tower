@@ -1,20 +1,24 @@
 [
-{
-  "title": "Industrial Building Phase 8A",
-  "location": "E 279 Phase 8A, Mohali",
-  "size": "794.44 sq. yds (16000 sq.ft covered)",
-  "price": "₹ 18 Cr",
-  "mainImage": "/images/Listing1/entrance.webp",
-  "imageFolder": "Listing1",
-  "nearby":["Mohali Tower"," Quark City"],
-  "slug": "industrial-building-phase-8a",
-  "amenities": [
-    "Rented to 4 Companies",
-    "Monthly Rental Income ₹7 Lakh",
-    "Investment Property",
-    "Expansion Potential (2 More Floors)",
-    "Industrial Area Location"
-  ],
-  "type": "corporate"
-}
+  {
+    "title": "Industrial Building Phase 8A",
+    "location": "E-289, Phase 8A, Mohali",
+    "size": "794.44 sq. yds. (16,000 sq.ft. covered area)",
+    "price": "₹18 Cr",
+    "mainImage": "/images/Listing1/entrance.webp",
+    "imageFolder": "Listing1",
+    "nearby": [
+      "Mohali Tower",
+      "Quark City"
+    ],
+    "slug": "industrial-building-phase-8a",
+    "amenities": [
+      "Rented to 4 Companies",
+      "Monthly Rental Income ₹7 Lakh",
+      "Excellent Investment Opportunity",
+      "Expansion Potential (2 Additional Floors)",
+      "Prime Industrial Area Location"
+    ],
+    "description": "Industrial building located at E-289, Phase 8A, Mohali, measuring 794.44 sq. yds. with a covered area of 16,000 sq.ft. The property is currently rented to four companies, generating a monthly rental income of ₹7 lakh. Additional construction potential for two more floors makes it a strong investment opportunity.",
+    "type": "corporate"
+  }
 ]
