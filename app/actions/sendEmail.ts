@@ -132,7 +132,7 @@ export async function sendEmail(formData: {
 
     const mailOptions = {
       from: `"Natraj Properties Website" <${process.env.SMTP_USER}>`,
-      to: "iph08@inphora.in",
+      to: "info@natrajproperties.com",
       replyTo: sanitizedData.email,
       subject: `New Enquiry: ${sanitizedData.name} - Natraj Properties`,
       html: htmlContent,
