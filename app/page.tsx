@@ -81,7 +81,7 @@ async function getFeaturedProperties(): Promise<Property[]> {
     return [];
   }
 }
-
+console.log(process.env.SMTP_PASSWORD)
 const testimonials = [
   {
     quote:
